@@ -31,7 +31,7 @@ const client = new Client({
 client.settings = new Enmap({ name: "settings", fetchAll: false, autoFetch: true, cloneLevel: 'deep' });
 
 client.on("ready", async () => {
-    console.log(`NateBot » Bot is now online on port ${process.env.PORT}!`);
+    console.log(`Bot is now online on port ${process.env.PORT}!`);
 
     const webPortal = require("./server");
     webPortal.load(client);
