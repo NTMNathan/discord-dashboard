@@ -14,7 +14,7 @@ git clone https://github.com/NTMNathan/discord-dashboard
 
 3. Rename `example.env` to `.env` and fill the required values from the Discord **OAuth2** and **Bot** Page. **Do not show anyone these!**
 
-4. Install all of the required NPM modules with the following command
+4. Install all of the required NPM modules with the following command...
 ```bash
 npm install --save
 ```
@@ -25,8 +25,9 @@ npm install --save
 
 
 6. Start the dashboard.
+```bash
 node bot
-
+```
 
 > Note: You do not need to enable and specify any gateway intents.
 
