@@ -1,0 +1,36 @@
+<%- include("../partials/header") %>
+
+<title>Manage <%= guild.name %> » <%= bot.user.username %> Dashboard</title>
+
+<div class="text-center text-light" style="padding-top: 65px; padding-bottom: 20px;">
+    <div class="p-5 text-center" style="padding-top: 110px; background-color: #3B465E;">
+        <% if (guild.icon) { %>
+            <img class="rounded-circle" width="140px" style="opacity: 1;" src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>?size=512"> 
+        <% } else { %>
+            <img class="rounded-circle" width="84px" style="opacity: 1;" src="https://discordapp.com/assets/6debd47ed13483642cf09e832ed0bc1b.png?size=2048"> 
+        <% } %>
+        <br>
+        <br>
+        <h1 class="mb-3">Manage <%= guild.name %></h1>
+    </div>
+</div>
+
+<!-- Ik this is not the prettiest list but it shows the servers correctly. -->
+<div class="container text-light">
+    <form role="form" action="/dashboard/server/<%= guild.id %>" method="POST">
+        <div class="mb-3">
+            <label for="prefix" class="form-label text-light">Prefix</label>
+            <input type="text" class="form-control" name="prefix" placeholder="<%= settings.prefix %>">
+            <br>
+            <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Save Changes</button>
+            <br>
+            <small>Page will reload after clicking the save button.</small>
+        </div>
+        <br>
+        <br>
+    </form>
+
+</div>
+
+
+<%- include("../partials/footer") %>
