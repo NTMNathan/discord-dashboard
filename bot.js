@@ -1,5 +1,4 @@
-const { Client, WebhookClient, MessageEmbed } = require("discord.js");
-const db = require("quick.db");
+const { Client, MessageEmbed } = require("discord.js");
 const Enmap = require("enmap");
 const { stripIndents } = require("common-tags");
 const config = require("./config.json");
