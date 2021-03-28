@@ -9,6 +9,7 @@ router.get("/profile", checkAuth, async (req, res) => {
     let userObj = req.client.users.cache.get(req.user.id);
 
         let userSubscription = {
+            undefined: "None",
             0: "None",
             1: "Nitro Classic",
             2: "Nitro Premium"
@@ -31,6 +32,7 @@ router.get("/profile", checkAuth, async (req, res) => {
         const flags = {
             DISCORD_EMPLOYEE: 'Discord Employee ⚒',
             DISCORD_PARTNER: 'Discord Partner ♾',
+            PARTNERED_SERVER_OWNER: 'Partnered Server Owner ♾',
             BUGHUNTER_LEVEL_1: 'Bug Hunter (Level 1) 🐞',
             BUGHUNTER_LEVEL_2: 'Bug Hunter (Level 2) 🐛',
             HYPESQUAD_EVENTS: 'HypeSquad Events',
@@ -41,10 +43,18 @@ router.get("/profile", checkAuth, async (req, res) => {
             TEAM_USER: 'Team User',
             SYSTEM: 'System',
             VERIFIED_BOT: 'Verified Bot',
-            VERIFIED_DEVELOPER: 'Early Verified Bot Developer'
+            EARLY_VERIFIED_BOT_DEVELOPER: 'Early Verified Bot Developer',
+            EARLY_VERIFIED_DEVELOPER: 'Early Verified Developer',
+            VERIFIED_DEVELOPER: 'Verified Bot Developer'
         };
     
-        let userFlags = userObj.flags.toArray();    
+        let userFlags;
+
+        try {
+            userFlags = userObj.flags.toArray();    
+        } catch (e) {
+            userFlags = [];
+        }
     
         res.render("dashboard/profile", {
             tag: (req.user ? req.user.tag : "Login"),

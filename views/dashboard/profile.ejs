@@ -35,6 +35,10 @@
                 <td style="font-size: 20px;">#<%= user.discriminator %></td>
             </tr>
             <tr class="text-center">
+                <td style="font-size: 20px;"><i class="fas fa-flag"></i> Flags</td>
+                <td style="font-size: 20px;"><%= userFlags %></td>
+            </tr>
+            <tr class="text-center">
                 <td style="font-size: 20px;"><i class="fas fa-calendar"></i> Created</td>
                 <td style="font-size: 20px;"><%= moment(userObj.createdAt).format("LLLL") %></td>
             </tr>
