@@ -1,6 +1,12 @@
 # Discord Dashboard Example
 A simple Discord Bot Dashboard i've made. Coded with Express, Enmap and Discord.js.
 
+## Weeby API [Advert]
+Never get stressed again with Discord Bot Development. With [Weeby API](https://weebyapi.xyz/), it offers a range of endpoints available from Generators, GIFs and much more!
+
+Get Started Now: [https://weebyapi.xyz/](https://weebyapi.xyz/)
+
+
 ## Setup 
 1. Create a folder on your computer, then type the following console command to clone this repository.
 ```bash
