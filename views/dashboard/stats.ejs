@@ -1,0 +1,88 @@
+<%- include("../partials/header") %>
+
+<title>Stats | <%= guild.name %> » <%= bot.user.username %> Dashboard</title>
+
+<section class="hero is-medium is-black" style="padding-top: 50px; padding-bottom: 50px;">
+    <div class="container">
+        <figure class="image is-128x128 has-image-centered">
+            <img class="is-rounded" src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}?size=512` : 'https://i.imgur.com/RO3uUxX.png' %>">
+        </figure>
+        <br>
+        <h1 class="is-size-1">
+            <strong class="has-text-white"><%= guild.name %> Statistics</strong>
+            <hr style="background-color: dimgray">
+            <div class="columns is-centered">
+                <div class="field is-grouped has-image-centered">
+                    <p class="control">
+                        <a href="/dashboard/server/<%= guild.id %>" class="button is-sm is-rounded is-white">
+                            <i class="fa-solid fa-angles-left" style="padding-right: 5px;"></i> Go back?
+                        </a>
+                    </p>
+            </div>
+        </h1>
+    </div>
+</section>
+
+<%
+    const owner = bot.users.cache.get(guild.ownerId);
+%>
+
+<div class="container" style="padding-top: 50px; padding-bottom: 30px;">
+    <table class="table text-light is-fullwidth">
+        <thead class="thead has-text-centered">
+            <tr>
+              <th style="font-size: 20px;" scope="col">Type</th>
+              <th style="font-size: 20px;" scope="col">Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="has-text-centered">
+                <td style="font-size: 20px;"><i class="fas fa-star"></i> ID</td>
+                <td style="font-size: 20px;"><%= guild.id %></td>
+            </tr>
+            <tr class="has-text-centered">
+                <td style="font-size: 20px;"><i class="fas fa-crown"></i> Server Owner</td>
+                <td style="font-size: 20px;"><%= owner.tag %> [<%= guild.ownerId %>]</td>
+            </tr>
+            <tr class="has-text-centered">
+                <td style="font-size: 20px;"><i class="fas fa-calendar"></i> Created</td>
+                <td style="font-size: 20px;"><%= moment(guild.createdAt).format("LLLL") %></td>
+            </tr>
+            <tr class="has-text-centered">
+                <td style="font-size: 20px;"><i class="fas fa-users"></i> Members</td>
+                <td style="font-size: 20px;">
+                    <ul>
+                        <li><%= guild.memberCount - guild.members.cache.filter(m => m.user.bot).size %> Users</li>
+                        <li><%= guild.members.cache.filter(m => m.user.bot).size %> Bots</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="has-text-centered">
+                <td style="font-size: 20px;"><i class="fas fa-hashtag"></i> Channels</td>
+                <td style="font-size: 20px;">
+                    <ul>
+                        <li><%= guild.channels.cache.filter(c => c.type === 'GUILD_TEXT').size %> Text</li>
+                        <li><%= guild.channels.cache.filter(c => c.type === 'GUILD_VOICE').size %> Voice</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="has-text-centered">
+                <td style="font-size: 20px;"><i class="fas fa-smile"></i> Emojis</td>
+                <td style="font-size: 20px;">
+                    <ul>
+                        <li><%= guild.emojis.cache.filter(e => e.animated === false).size %> Normal</li>
+                        <li><%= guild.emojis.cache.filter(e => e.animated === true).size %> Animated</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="has-text-centered">
+                <td style="font-size: 20px;"><i class="fas fa-user-shield"></i> Roles</td>
+                <td style="font-size: 20px;"><%= guild.roles.cache.size %></td>
+            </tr>
+            <tr class="has-text-centered">
+                <td style="font-size: 20px;"><i class="fas fa-arrow-up"></i> Highest Role</td>
+                <td style="font-size: 20px;"><span style="color: <%= guild.roles.highest.hexColor %>; background-color: #23272A; border-radius: 5px; padding: 2.5px;"><%= guild.roles.highest.name %></span></td>
+            </tr>
+          </tbody>
+      </table>
+</div>

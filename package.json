@@ -4,10 +4,9 @@
   "description": "Dashboard example using Discord.js and Passport-Discord",
   "main": "bot.js",
   "scripts": {
-    "lint": "eslint --ext .js,.ts . src --fix",
-    "start": "node weebyapi",
+    "start": "node bot",
     "deploy": "node deploy"
-  },
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NTMNathan/discord-dashboard.git"
@@ -31,20 +30,20 @@
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
-    "enmap": "^5.8.8",
-    "eslint": "^8.11.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
     "express": "^4.17.3",
     "express-session": "^1.17.2",
     "fs": "0.0.1-security",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
-    "mongodb": "^4.4.1",
     "mongoose": "^6.2.6",
     "node-superfetch": "^0.2.3",
     "passport": "^0.5.2",
     "passport-discord": "^0.1.4",
     "path": "^0.12.7"
+  },
+    "devDependencies": {
+      "eslint": "^8.11.0",
+      "eslint-plugin-node": "^11.1.0",
+      "eslint-plugin-promise": "^6.0.0"
   }
 }

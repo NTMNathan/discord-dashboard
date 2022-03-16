@@ -1,11 +1,49 @@
-body {
-	background-color: #23272A;
+html, body {
+	background-color: #292841;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Montserrat" !important;
+    font-family: "Nunito Sans" !important;
 }
 
 p, div {
-    font-family: "Karla" !important;
+    font-family: "Open Sans" !important;
+}
+
+.navicon-fade {
+    transition: opacity 0.3s;
+    -webkit-transition: opacity 0.3s;
+    opacity: 1;
+}
+
+.navicon-fade:hover {
+    opacity: 0.5;
+}
+
+.navSpace {
+    padding-top: 16px; 
+    padding-bottom: 10px; 
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.navbar-menu {
+    background-color: #5865F2;
+}
+
+.navbar-item {
+    color: #ffffff;
+}
+
+.navbar-burger {
+    color: #ffffff;
+}
+
+.navbar-burger:hover {
+    color: #d8d8d8;
+}
+
+.has-image-centered {
+    margin-left: auto;
+    margin-right: auto;
 }

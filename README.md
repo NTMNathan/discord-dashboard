@@ -1,5 +1,13 @@
+<img src="https://i.imgur.com/1JEnQ5p.png" width="650" height="auto">
+
 # Discord Dashboard Example
-A simple Discord Bot Dashboard i've made. Coded with Express, Enmap and Discord.js.
+A simple Discord Bot Dashboard that is coded with Express, MongoDB and Discord.js
+
+**Screenshots:** [Click Here](https://imgur.com/a/LJTHT3j)
+
+## Requirements
+- Node.js **v17** or later
+- Discord.js **v13.6.0** or later
 
 ## Setup 
 1. Create a folder on your computer, then type the following console command to clone this repository.
@@ -23,13 +31,18 @@ npm install --save
 
 ![alt text](https://i.imgur.com/9EWhEnE.png "Step 3")
 
+6. Create a MongoDB database. You can choose between hosting it yourself (locally, VPS) or from [MongoDB Atlas](https://www.mongodb.com/atlas/database). Then paste the connection string into the `.env` file. The connection string is in the format of `mongodb://<username>:<password>@<host>:<port>/<database>`. (Might be different!)
 
-6. Start the dashboard.
+7. After filling out the `.env` file, run the following command in the console to deploy the bot commands. This may take up to an hour to process through. Do this once unless you have made major changes to the commands (New Command, changed subcommands, etc).
+
+```bash
+npm run deploy
+```
+
+8. Start the dashboard.
 ```bash
 node bot
 ```
 
-> Note: You do not need to enable and specify any gateway intents.
-
 ## Support and Feedback
- I will try to maintain this as much as possible. Feel free to join my [Discord Server](https://natebot.xyz/discord) and ask for help in the `#support` and `#bugs` channels. If you have any changes that you like to propose to this repo, make a Pull Request and i'll review it.
+Feel free to join the [Discord Server](https://natebot.xyz/discord) and ask for help in the `#support` and `#bugs` channels. If you have any changes that you like to make to this repo, make a Pull Request and it will be reviewed.

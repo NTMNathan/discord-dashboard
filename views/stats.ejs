@@ -2,56 +2,60 @@
 
 <title>Bot Stats » <%= bot.user.username %> Dashboard</title>
 
-<div class="bg-light text-dark text-center" style="padding-top: 65px;">
+<div class="bg-light text-dark has-text-centered" style="padding-top: 45px;">
     <div class="p-5">
         <div class="container">
-            <h1 class="mb-3">Bot Statistics</h1>
+          <h2 class="is-size-2 has-text-white">Bot Statistics</h2>
         </div>
     </div>
 </div>
 
-<div class="container" style="padding-top: 20px; padding-bottom: 20px;">
-<table class="table text-light">
-    <thead class="thead text-center text-light mdb-color lighten-1 lighten-1">
+<div class="container" style="padding-top: 10px; padding-bottom: 90px;">
+  <table class="table text-light is-fullwidth">
+    <thead class="thead has-text-centered">
         <tr>
           <th style="font-size: 20px;" scope="col">Type</th>
           <th style="font-size: 20px;" scope="col">Data</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="text-center">
+        <tr class="has-text-centered">
             <td style="font-size: 20px;"><i class="fas fa-users"></i> Users</td>
-            <td style="font-size: 20px;"><%= bot.users.cache.size || 0 %> </td>
+            <td style="font-size: 20px;"><%= bot.users.cache.size || 0 %></td>
           </tr>
-          <tr class="text-center">
+          <tr class="has-text-centered">
             <td style="font-size: 20px;"><i class="fas fa-server"></i> Servers</td>
             <td style="font-size: 20px;"><%= bot.guilds.cache.size || 0 %></td>
           </tr>
-          <tr class="text-center">
+          <tr class="has-text-centered">
             <td style="font-size: 20px;"><i class="fas fa-hashtag"></i> Channels</td>
-            <td style="font-size: 20px;"><%= bot.channels.cache.size || 0 %> (<%= bot.channels.cache.filter(c => c.type === 'text').size %> Text and <%= bot.channels.cache.filter(c => c.type === 'voice').size %> Voice)</td>
+            <td style="font-size: 20px;"><%= bot.channels.cache.size || 0 %> (<%= bot.channels.cache.filter(c => c.type === 'GUILD_TEXT').size %> Text and <%= bot.channels.cache.filter(c => c.type === 'GUILD_VOICE').size %> Voice)</td>
           </tr>
-          <tr class="text-center">
+          <tr class="has-text-centered">
             <td style="font-size: 20px;"><i class="fas fa-laugh"></i> Emojis</td>
             <td style="font-size: 20px;"><%= bot.emojis.cache.size || 0 %> (<%= bot.emojis.cache.filter(e => e.animated === false).size %> Normal and <%= bot.emojis.cache.filter(e => e.animated === true).size %> Animated)</td>
           </tr>
-          <tr class="text-center">
-            <td style="font-size: 20px;"><i class="fab fa-discord"></i> Uptime</td>
+          <tr class="has-text-centered">
+            <td style="font-size: 20px;"><i class="fa-solid fa-stopwatch"></i> Uptime</td>
             <td style="font-size: 20px;"><%= uptime %></td>
           </tr>
-          <tr class="text-center">
+          <tr class="has-text-centered">
             <td style="font-size: 20px;"><i class="fas fa-table-tennis"></i> Ping (Latency)</td>
             <td style="font-size: 20px;"><%= bot.ws.ping || 0 %>ms</td>
           </tr>
-          <tr class="text-center">
-            <td style="font-size: 20px;"><i class="fab fa-discord"></i> Discord.js Version</td>
-            <td style="font-size: 20px;">v<%= version %></td>
+          <tr class="has-text-centered">
+            <td style="font-size: 20px;"><i class="fa-solid fa-database"></i> Discord.js Version</td>
+            <td style="font-size: 20px;">v<%= djsVersion %></td>
           </tr>
-          <tr class="text-center">
+          <tr class="has-text-centered">
+            <td style="font-size: 20px;"><i class="fab fa-discord"></i> Database Version</td>
+            <td style="font-size: 20px;"><%= mongoDBVersion %></td>
+          </tr>
+          <tr class="has-text-centered">
             <td style="font-size: 20px;"><i class="fab fa-node"></i> Node.js Version</td>
             <td style="font-size: 20px;"><%= process.version %></td>
           </tr>
-          <tr class="text-center">
+          <tr class="has-text-centered">
             <td style="font-size: 20px;"><i class="fas fa-laptop"></i> Usage</td>
             <td style="font-size: 20px;">
                 <ul>
@@ -65,4 +69,4 @@
   </table>
 </div>
 
-<!-- if you would like to add a footer, use: include("partials/footer") like the header one at the top of the code. -->
+<%- include("partials/footer") %>

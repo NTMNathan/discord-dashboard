@@ -1,82 +1,107 @@
-const { Client, MessageEmbed } = require("discord.js");
-const Enmap = require("enmap");
-const { stripIndents } = require("common-tags");
-const config = require("./config.json");
+const { Client, MessageEmbed, Formatters, Intents, Constants } = require('discord.js');
+const { stripIndents } = require('common-tags');
+const mongoose = require('mongoose');
 
-require("dotenv").config();
+const db = require('./db/manager');
+
+require('dotenv').config();
 
 const client = new Client({
-    disableMentions: 'everyone',
-    messageCacheMaxSize: 50,
-    messageCacheLifetime: 60,
-    messageSweepInterval: 120,
-    partials: [
-        'MESSAGE',
-        'USER',
-        'GUILD_MEMBER',
-        'REACTION',
-        'CHANNEL'
-    ],
-    ws: {
-        intents: [
-            'GUILDS',
-            'GUILD_MEMBERS',
-            'GUILD_PRESENCES',
-            'GUILD_MESSAGES',
-        ],
-    }
+	allowedMentions: {
+		parse: [
+			'users',
+			'roles',
+		],
+		repliedUser: true,
+	},
+	restSweepInterval: 30,
+	restTimeOffset: 250,
+	partials: [
+		Constants.PartialTypes.GUILD_MEMBER,
+		Constants.PartialTypes.MESSAGE,
+		Constants.PartialTypes.CHANNEL,
+		Constants.PartialTypes.USER,
+		Constants.PartialTypes.REACTION,
+	],
+	intents: [
+		Intents.FLAGS.GUILDS,
+		Intents.FLAGS.GUILD_MEMBERS,
+		Intents.FLAGS.GUILD_PRESENCES,
+		Intents.FLAGS.GUILD_MESSAGES,
+	],
 });
 
-client.settings = new Enmap({ name: "settings", fetchAll: false, autoFetch: true, cloneLevel: 'deep' });
+client.on('ready', async () => {
+	console.log('Bot is now online!');
 
-client.on("ready", async () => {
-    console.log(`Bot is now online on port ${process.env.PORT}!`);
+	mongoose.connect(process.env.MONGO_URL, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	}).then(() => console.log('MongoDB Client has been successfully connected.'));
 
-    const webPortal = require("./server");
-    webPortal.load(client);
+	const webPortal = require('./server');
+	webPortal.load(client);
 });
 
-client.on('message', async (message) => {
+client.on('guildCreate', async guild => {
+	if (!guild.available) return;
 
-    client.settings.ensure(message.guild.id, {
-        guildID: message.guild.id,
-        prefix: "!"
-    }); //You can add to this enmap. Such as more settings!
+	await db.createServer(guild.id);
 
-    const fetchedPrefix = client.settings.get(message.guild.id, "prefix");
+	console.log(`Joined server: ${guild.name}`);
+});
 
-    const prefix = fetchedPrefix || config.prefix;
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
-    const cmd = args.shift().toLowerCase();
+client.on('interactionCreate', async interaction => {
+	if (interaction.user.bot) return;
+	if (!interaction.inGuild() && interaction.isCommand()) return interaction.reply({ content: 'You must be in a server to use commands.' });
 
-    if (message.author.bot) return;
-    if (!message.guild) return;
-    if (!message.content.startsWith(prefix)) return;
+	if (interaction.isCommand()) {
+		if (interaction.commandName === 'ping') {
+			const now = Date.now();
+			await interaction.deferReply();
 
-    if (cmd === "prefix") {
-        const curPrefix = client.settings.get(message.guild.id);
+			await interaction.followUp({ content: `🏓 Pong!\n\nRoundtrip: **${Math.round(Date.now() - now)}ms**\nAPI Latency: **${Math.round(client.ws.ping)}ms**` });
+		}
+		else if (interaction.commandName === 'prefix') {
+			await interaction.deferReply();
 
-        const newPrefix = args[0];
-        if (!newPrefix) return message.channel.send(`**Current Prefix: \`${curPrefix.prefix || config.prefix}\`**\nYou will need to specify a new prefix if you want to change it.`);
+			const subCommand = interaction.options.getSubcommand();
 
-        if (newPrefix === curPrefix.prefix) return message.channel.send(`The bot's prefix is already set as that!`);
+			if (subCommand === 'view') {
+				const server = await db.findServer(interaction.guild.id);
 
-        client.settings.set(message.guild.id, newPrefix, "prefix");
-        const prefixEmbed = new MessageEmbed()
-            .setTitle(`**Bot Prefix**`)
-            .setColor("RANDOM")
-            .setDescription(stripIndents`
-            Successfully set the prefix as: **\`${newPrefix}\`**
-            `)
+				await interaction.followUp({ content: `The prefix for this server ${server.prefix ? `is **\`${server.prefix}\`**` : 'has not been set.' }` });
+			}
+			else if (subCommand === 'set') {
+				const prefix = interaction.options.getString('value');
+				if (prefix.length > 3) return interaction.followUp({ content: 'The prefix cannot be more than **3** characters long!' });
 
-        return message.channel.send(prefixEmbed);
-    };
+				await db.updateServerPrefix(interaction.guild.id, prefix);
 
-    if (cmd === "ping") {
-        const msg = await message.channel.send(`🏓 Pinging....`);
-        msg.edit(`🏓 Pong!\nThe Latency is ${Math.floor(msg.createdTimestamp - message.createdTimestamp)}ms\nAPI Latency is ${Math.round(client.ws.ping)}ms`);
-    };
+				return await interaction.followUp({ content: `Successfully set **${interaction.guild.name}**'s prefix to **\`${prefix}\`**` });
+			}
+		}
+	}
 
+	if (interaction.isContextMenu()) {
+		if (interaction.commandName === 'User Info') {
+			const member = interaction.guild.members.cache.get(interaction.targetId);
+
+			const embed = new MessageEmbed()
+				.setAuthor({ name: member.user.tag, iconURL: member.user.displayAvatarURL({ dynamic: true, size: 2048 }) })
+				.setColor('#5865F2')
+				.setDescription(stripIndents`
+                **ID:** ${member.id}
+                **Bot:** ${member.bot ? 'Yes' : 'No'}
+                **Created:** ${Formatters.time(Math.trunc(member.user.createdTimestamp / 1000), 'd')}
+                **Joined:** ${Formatters.time(Math.trunc(member.joinedAt / 1000), 'd')}
+                **Nickname:** ${member.nickname || 'None'}
+                **Hoist Role:** ${member.roles.hoist ? member.roles.hoist.name : 'None'}
+                `);
+
+			await interaction.reply({ embeds: [embed] });
+		}
+	}
 });
 
 client.login(process.env.TOKEN);

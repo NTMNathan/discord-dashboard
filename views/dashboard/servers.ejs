@@ -2,30 +2,38 @@
 
 <title>Servers » <%= bot.user.username %> Dashboard</title>
 
-<div class="text-center text-light" style="padding-top: 65px; padding-bottom: 20px;">
-    <div class="p-5 text-center" style="padding-top: 110px; background-color: #3B465E;">
-        <h1 class="mb-3">Select a Server...</h1>
+<section class="hero is-medium is-black" style="padding-top: 50px; padding-bottom: 50px;">
+    <div class="container">
+        <h1 class="is-size-1">
+            Select a Server
+        </h1>
+    </div>
+</section>
+
+<div class="container" style="padding-top: 50px; padding-bottom: 50px;">
+    <div class="columns is-multiline">
+        <% for (let guild of guilds) { %>
+            <div class="column post is-6">
+                <a href="/dashboard/server/<%= guild.id %>">
+                    <div class="card">
+                        <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                            <figure class="image is-48x48">
+                                <img class="is-rounded" src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : 'https://i.imgur.com/RO3uUxX.png' %>">
+                            </figure>
+                            </div>
+                            <div class="media-content">
+                            <h4 class="title is-4"><%= guild.name %></h4>
+                            <p class="subtitle is-6"><%= bot.guilds.cache.get(guild.id) ? "Edit this server" : "Invite Bot" %></p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <% } %>
     </div>
 </div>
-
-<!-- Ik this is not the prettiest list but it shows the servers correctly. -->
-<div class="container text-center">
-    <div class="row">
-        <ul class="list-group" style="padding-bottom: 20px">
-            <% for (let i = 0; i < guilds.length; i++) { %>
-                
-                  <li class="list-group-item"><a class="text-dark" href="/dashboard/server/<%= guilds[i].id %>">
-                    <% if (guilds[i].icon) { %>
-                        <img class="rounded-circle" width="84px" style="opacity: 1;" src="https://cdn.discordapp.com/icons/<%= guilds[i].id %>/<%= guilds[i].icon %>"> 
-                    <% } else { %>
-                        <img class="rounded-circle" width="84px" style="opacity: 1;" src="https://discordapp.com/assets/6debd47ed13483642cf09e832ed0bc1b.png?size=2048"> 
-                    <% } %>
-                    <span style="padding-left: 20px; font-size: larger;"><%= guilds[i].name %></span></a></li>
-            <% } %>
-        </ul>  
-      </div>    
-
-</div>
-
 
 <%- include("../partials/footer") %>
