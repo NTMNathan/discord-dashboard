@@ -9,12 +9,12 @@
 </style>
 
 <section class="hero is-small has-text-centered is-link">
-    <div class="hero-body" style="padding-top: 50px; padding-bottom: 50px; background-image: url(<%= user.banner ? `https://cdn.discordapp.com/banners/${user.id}/${user.banner}?size=2048` : 'https://i.imgur.com/I06gL1Z.png' %>)">
+    <div class="hero-body" style="padding-top: 50px; padding-bottom: 50px; background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(<%= user.banner ? `https://cdn.discordapp.com/banners/${user.id}/${user.banner}?size=2048` : 'https://i.imgur.com/I06gL1Z.png' %>)">
         <figure class="image is-128x128 has-image-centered">
-            <img class="is-rounded" src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>">
+            <img class="is-rounded" style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);" src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>">
         </figure>
         <br>
-        <h1 class="is-size-1">
+        <h1 class="is-size-1" style="text-shadow: 0 0 10px #000000;">
             <%= user.username %>#<%= user.discriminator %>
         </h1>
     </div>
