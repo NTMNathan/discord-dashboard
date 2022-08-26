@@ -47,7 +47,7 @@
             </thead>
             <% for (let i = 0; i < members.length; i++) { %>
               <% 
-                const roles = members[i].roles.cache.map(r => r.name);
+                const roles = members[i].roles.cache.map(r => r);
                 const index = roles.findIndex(r => r === "@everyone");
 
                 roles.splice(index, 1);
@@ -76,7 +76,15 @@
                 </td>
                 <td style="font-size: 20px;"><b><%= members[i].user.username %>#<%= members[i].user.discriminator %></b> (<%= members[i].id %>)</td>
                 <td style="font-size: 20px;"><span title="<%= moment(members[i].joinedAt).format("dddd MMMM Do YYYY, h:mm a") %>"><%= moment(members[i].joinedAt).format("l") %></span></td>
-                <td style="font-size: 20px;"><%= roles.join(", ") %></td>
+                <td style="font-size: 20px;">
+
+                <% if (roles.length === 0) { %>
+
+                <% } else { %>
+                    <% for (let j = 0; j < roles.length; j++) { %>
+                        <span class="tag is-dark" style="color: <%= roles[j].hexColor === "#000000" ? "#ffffff" : roles[j].hexColor %>" title="<%= roles[j].id %>"><%= roles[j].name %></span>
+                    <% } %>
+                <% } %>
               </tr>                                          
             <% } %>
           </table>

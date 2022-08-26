@@ -61,8 +61,8 @@
                 <td style="font-size: 20px;"><i class="fas fa-hashtag"></i> Channels</td>
                 <td style="font-size: 20px;">
                     <ul>
-                        <li><%= guild.channels.cache.filter(c => c.type === 'GUILD_TEXT').size %> Text</li>
-                        <li><%= guild.channels.cache.filter(c => c.type === 'GUILD_VOICE').size %> Voice</li>
+                        <li><%= guild.channels.cache.filter(c => c.type === channelType.GuildText).size %> Text</li>
+                        <li><%= guild.channels.cache.filter(c => c.type === channelType.GuildVoice).size %> Voice</li>
                     </ul>
                 </td>
             </tr>

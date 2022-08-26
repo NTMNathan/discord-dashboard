@@ -1,5 +1,5 @@
 const express = require('express');
-const { Permissions } = require('discord.js');
+const { ChannelType, PermissionsBitField } = require('discord.js');
 const moment = require('moment');
 require('moment-duration-format');
 
@@ -48,27 +48,25 @@ router.get('/server/:guildID/profile', checkAuth, async (req, res) => {
 	}
 
 	const flags = {
-		DISCORD_EMPLOYEE: 'Discord Employee ⚒',
-		DISCORD_PARTNER: 'Discord Partner ♾',
-		PARTNERED_SERVER_OWNER: 'Partnered Server Owner ♾',
-		BUGHUNTER_LEVEL_1: 'Bug Hunter (Level 1) 🐞',
-		BUGHUNTER_LEVEL_2: 'Bug Hunter (Level 2) 🐛',
-		HYPESQUAD_EVENTS: 'HypeSquad Events',
-		HOUSE_BRAVERY: 'House of Bravery',
-		HOUSE_BRILLIANCE: 'House of Brilliance',
-		HOUSE_BALANCE: 'House of Balance',
-		EARLY_SUPPORTER: 'Early Supporter',
-		TEAM_USER: 'Team User',
-		SYSTEM: 'System',
-		VERIFIED_BOT: 'Verified Bot',
-		EARLY_VERIFIED_BOT_DEVELOPER: 'Early Verified Bot Developer',
-		DISCORD_CERTIFIED_MODERATOR: 'Discord Certified Moderator',
+		'Staff': 'Discord Employee ⚒',
+		'Partner': 'Partnered Server Owner ♾',
+		'BugHunterLevel1': 'Bug Hunter (Level 1) 🐞',
+		'BugHunterLevel2': 'Bug Hunter (Level 2) 🐛',
+		'Hypesquad': 'HypeSquad Events',
+		'HypeSquadOnlineHouse1': 'House of Bravery',
+		'HypeSquadOnlineHouse2': 'House of Brilliance',
+		'HypeSquadOnlineHouse3': 'House of Balance',
+		'PremiumEarlySupporter': 'Early Nitro Supporter',
+		'TeamPseudoUser': 'Team User',
+		'VerifiedBot': 'Verified Bot',
+		'VerifiedDeveloper': 'Early Verified Bot Developer',
+		'CertifiedModerator': 'Discord Certified Moderator',
 	};
 
 	let userFlags;
 
 	try {
-		userFlags = userObj.flags.toArray();
+		userFlags = userObj.user.flags.toArray();
 	}
 	catch (e) {
 		userFlags = [];
@@ -94,7 +92,7 @@ router.get('/server/:guildID', checkAuth, async (req, res) => {
 	const serverData = await db.findServer(req.params.guildID) || await db.createServer(req.params.guildID);
 
 	if (!server && req.user.guilds.filter(u => ((u.permissions & 2146958591) === 2146958591)).map(u => u.id).includes(req.params.guildID)) {
-		return res.redirect(`https://discord.com/oauth2/authorize?client_id=${req.client.user.id}&scope=bot%20applications.commands&permissions=1094679657975&guild_id=${req.params.guildID}`);
+		return res.redirect(`https://discord.com/oauth2/authorize?client_id=${req.client.user.id}&scope=bot%20applications.commands&permissions=1098974625783&guild_id=${req.params.guildID}`);
 	}
 	else if (!server) {
 		return res.redirect('/dashboard/servers');
@@ -104,6 +102,7 @@ router.get('/server/:guildID', checkAuth, async (req, res) => {
 		bot: req.client,
 		user: req.user || null,
 		guild: server,
+		channelType: ChannelType,
 		serverData: serverData,
 	});
 });
@@ -111,7 +110,7 @@ router.get('/server/:guildID', checkAuth, async (req, res) => {
 router.post('/server/:guildID', checkAuth, async (req, res) => {
 	const server = req.client.guilds.cache.get(req.params.guildID);
 	if (!server) return res.redirect('/dashboard/servers');
-	if (!req.client.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).permissions.has(Permissions.FLAGS.MANAGE_SERVER)) return res.redirect('/dashboard/servers');
+	if (!req.client.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id).permissions.has(PermissionsBitField.Flags.ManageGuild)) return res.redirect('/dashboard/servers');
 
 	const data = req.body;
 
@@ -134,7 +133,7 @@ router.get('/server/:guildID/members', checkAuth, async (req, res) => {
 	const server = req.client.guilds.cache.get(req.params.guildID);
 
 	if (!server && req.user.guilds.filter(u => ((u.permissions & 2146958591) === 2146958591)).map(u => u.id).includes(req.params.guildID)) {
-		return res.redirect(`https://discord.com/oauth2/authorize?client_id=${req.client.user.id}&scope=bot%20applications.commands&permissions=1094679657975&guild_id=${req.params.guildID}`);
+		return res.redirect(`https://discord.com/oauth2/authorize?client_id=${req.client.user.id}&scope=bot%20applications.commands&permissions=1098974625783&guild_id=${req.params.guildID}`);
 	}
 	else if (!server) {
 		return res.redirect('/dashboard/servers');
@@ -155,7 +154,7 @@ router.get('/server/:guildID/stats', checkAuth, async (req, res) => {
 	const server = req.client.guilds.cache.get(req.params.guildID);
 
 	if (!server && req.user.guilds.filter(u => ((u.permissions & 2146958591) === 2146958591)).map(u => u.id).includes(req.params.guildID)) {
-		return res.redirect(`https://discord.com/oauth2/authorize?client_id=${req.client.user.id}&scope=bot%20applications.commands&permissions=1094679657975&guild_id=${req.params.guildID}`);
+		return res.redirect(`https://discord.com/oauth2/authorize?client_id=${req.client.user.id}&scope=bot%20applications.commands&permissions=1098974625783&guild_id=${req.params.guildID}`);
 	}
 	else if (!server) {
 		return res.redirect('/dashboard/servers');
@@ -165,6 +164,7 @@ router.get('/server/:guildID/stats', checkAuth, async (req, res) => {
 		bot: req.client,
 		user: req.user || null,
 		guild: server,
+		channelType: ChannelType,
 		moment: moment,
 	});
 });

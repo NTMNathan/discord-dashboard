@@ -29,7 +29,7 @@
           </tr>
           <tr class="has-text-centered">
             <td style="font-size: 20px;"><i class="fas fa-hashtag"></i> Channels</td>
-            <td style="font-size: 20px;"><%= bot.channels.cache.size || 0 %> (<%= bot.channels.cache.filter(c => c.type === 'GUILD_TEXT').size %> Text and <%= bot.channels.cache.filter(c => c.type === 'GUILD_VOICE').size %> Voice)</td>
+            <td style="font-size: 20px;"><%= bot.channels.cache.size || 0 %> (<%= bot.channels.cache.filter(c => c.type === channelType.GuildText).size %> Text and <%= bot.channels.cache.filter(c => c.type === channelType.GuildVoice).size %> Voice)</td>
           </tr>
           <tr class="has-text-centered">
             <td style="font-size: 20px;"><i class="fas fa-laugh"></i> Emojis</td>

@@ -1,5 +1,5 @@
 const express = require('express');
-const { version } = require('discord.js');
+const { ChannelType, version } = require('discord.js');
 const moment = require('moment');
 require('moment-duration-format');
 const passport = require('passport');
@@ -22,13 +22,14 @@ router.get('/stats', async (req, res) => {
 		bot: req.client,
 		user: req.user || null,
 		uptime: moment.duration(req.client.uptime).format(' D [days], H [hours], m [minutes], s [seconds]'),
+		channelType: ChannelType,
 		djsVersion: version,
 		mongoDBVersion: package.dependencies['mongoose'],
 	});
 });
 
 router.get('/invite', async function(req, res) {
-	res.redirect(`https://discord.com/oauth2/authorize?client_id=${req.client.user.id}&permissions=1094679657975&scope=bot%20applications.commands`);
+	res.redirect(`https://discord.com/oauth2/authorize?client_id=${req.client.user.id}&permissions=1098974625783&scope=bot%20applications.commands`);
 });
 
 router.get('/login', passport.authenticate('discord', { failureRedirect: '/' }), async function(req, res) {
