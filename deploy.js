@@ -1,6 +1,6 @@
 const { PermissionFlagsBits, SlashCommandBuilder, ContextMenuCommandBuilder } = require('discord.js');
 const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/10');
+const { Routes } = require('discord-api-types/v10');
 require('dotenv').config();
 
 const deploy = async () => {
