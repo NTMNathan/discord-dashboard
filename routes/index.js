@@ -1,8 +1,9 @@
 const express = require('express');
 const { ChannelType, version } = require('discord.js');
-const moment = require('moment');
-require('moment-duration-format');
 const passport = require('passport');
+const dayjs = require('dayjs');
+require('dayjs/plugin/duration');
+
 
 const package = require('../package.json');
 
@@ -21,7 +22,7 @@ router.get('/stats', async (req, res) => {
 		tag: (req.user ? req.user.tag : 'Login'),
 		bot: req.client,
 		user: req.user || null,
-		uptime: moment.duration(req.client.uptime).format(' D [days], H [hours], m [minutes], s [seconds]'),
+		uptime: dayjs(req.client.uptime).format('D [days], H [hours], m [minutes], s [seconds]'),
 		channelType: ChannelType,
 		djsVersion: version,
 		mongoDBVersion: package.dependencies['mongoose'],
@@ -40,9 +41,10 @@ router.get('/login', passport.authenticate('discord', { failureRedirect: '/' }),
 });
 
 router.get('/logout', async function(req, res) {
-	req.session.destroy(() => {
-		req.logout();
-		res.redirect('/');
+	req.logout(() => {
+		req.session.destroy(() => {
+			res.redirect('/');
+		});
 	});
 });
 

@@ -1,12 +1,12 @@
 {
   "name": "discord-dashboard",
-  "version": "2.2.0",
+  "version": "2.1.0",
   "description": "Dashboard example using Discord.js and Passport-Discord",
   "main": "bot.js",
   "scripts": {
     "start": "node bot",
     "deploy": "node deploy"
-},
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NTMNathan/discord-dashboard.git"
@@ -23,25 +23,24 @@
   },
   "homepage": "https://github.com/NTMNathan/discord-dashboard#readme",
   "dependencies": {
-    "@discordjs/rest": "^1.1.0",
+    "@discordjs/rest": "^1.7.1",
     "body-parser": "^1.20.0",
     "common-tags": "^1.8.2",
-    "discord.js": "^14.3.0",
-    "dotenv": "^16.0.1",
-    "ejs": "^3.1.8",
-    "express": "^4.18.1",
+    "dayjs": "^1.11.8",
+    "discord.js": "^14.11.0",
+    "dotenv": "^16.1.4",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "moment": "^2.29.4",
-    "moment-duration-format": "^2.3.2",
-    "mongoose": "^6.5.3",
+    "mongoose": "^7.2.3",
     "node-superfetch": "^0.2.3",
-    "passport": "^0.5.3",
+    "passport": "^0.6.0",
     "passport-discord": "^0.1.4",
     "path": "^0.12.7"
   },
-    "devDependencies": {
-      "eslint": "^8.15.0",
-      "eslint-plugin-node": "^11.1.0",
-      "eslint-plugin-promise": "^6.0.0"
+  "devDependencies": {
+    "eslint": "^8.42.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1"
   }
 }

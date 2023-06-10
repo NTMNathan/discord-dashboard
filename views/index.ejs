@@ -8,7 +8,7 @@
             <img class="is-rounded" src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>">
         </figure>
         <br>
-        <h1 class="is-size-2 has-text-white">Logged in as <strong class="has-text-white"><%= user.username %>#<%= user.discriminator %></strong></h1>
+        <h1 class="is-size-2 has-text-white">Logged in as <strong class="has-text-white"><%= user.username %><%= user.discriminator && user.discriminator !== '0' ? `#${user.discriminator}` : '' %></strong></h1>
         <p class="has-text-white">Welcome to the <b><%= bot.user.username %></b> dashboard! Where would you like to go?</p>
         <br>
 

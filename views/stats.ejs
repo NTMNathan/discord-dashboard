@@ -1,72 +1,86 @@
 <%- include("partials/header") %>
 
-<title>Bot Stats » <%= bot.user.username %> Dashboard</title>
+  <title>Bot Stats » <%= bot.user.username %> Dashboard</title>
 
-<div class="bg-light text-dark has-text-centered" style="padding-top: 45px;">
+  <div class="bg-light text-dark has-text-centered" style="padding-top: 45px;">
     <div class="p-5">
-        <div class="container">
-          <h2 class="is-size-2 has-text-white">Bot Statistics</h2>
-        </div>
+      <div class="container">
+        <h2 class="is-size-2 has-text-white">Bot Statistics</h2>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="container" style="padding-top: 10px; padding-bottom: 90px;">
-  <table class="table text-light is-fullwidth">
-    <thead class="thead has-text-centered">
-        <tr>
-          <th style="font-size: 20px;" scope="col">Type</th>
-          <th style="font-size: 20px;" scope="col">Data</th>
-        </tr>
-      </thead>
+  <div class="container" style="padding-top: 10px; padding-bottom: 90px;">
+    <table class="table text-light is-fullwidth">
       <tbody>
         <tr class="has-text-centered">
-            <td style="font-size: 20px;"><i class="fas fa-users"></i> Users</td>
-            <td style="font-size: 20px;"><%= bot.users.cache.size || 0 %></td>
-          </tr>
-          <tr class="has-text-centered">
-            <td style="font-size: 20px;"><i class="fas fa-server"></i> Servers</td>
-            <td style="font-size: 20px;"><%= bot.guilds.cache.size || 0 %></td>
-          </tr>
-          <tr class="has-text-centered">
-            <td style="font-size: 20px;"><i class="fas fa-hashtag"></i> Channels</td>
-            <td style="font-size: 20px;"><%= bot.channels.cache.size || 0 %> (<%= bot.channels.cache.filter(c => c.type === channelType.GuildText).size %> Text and <%= bot.channels.cache.filter(c => c.type === channelType.GuildVoice).size %> Voice)</td>
-          </tr>
-          <tr class="has-text-centered">
-            <td style="font-size: 20px;"><i class="fas fa-laugh"></i> Emojis</td>
-            <td style="font-size: 20px;"><%= bot.emojis.cache.size || 0 %> (<%= bot.emojis.cache.filter(e => e.animated === false).size %> Normal and <%= bot.emojis.cache.filter(e => e.animated === true).size %> Animated)</td>
-          </tr>
-          <tr class="has-text-centered">
-            <td style="font-size: 20px;"><i class="fa-solid fa-stopwatch"></i> Uptime</td>
-            <td style="font-size: 20px;"><%= uptime %></td>
-          </tr>
-          <tr class="has-text-centered">
-            <td style="font-size: 20px;"><i class="fas fa-table-tennis"></i> Ping (Latency)</td>
-            <td style="font-size: 20px;"><%= bot.ws.ping || 0 %>ms</td>
-          </tr>
-          <tr class="has-text-centered">
-            <td style="font-size: 20px;"><i class="fa-solid fa-database"></i> Discord.js Version</td>
-            <td style="font-size: 20px;">v<%= djsVersion %></td>
-          </tr>
-          <tr class="has-text-centered">
-            <td style="font-size: 20px;"><i class="fab fa-discord"></i> Database Version</td>
-            <td style="font-size: 20px;"><%= mongoDBVersion %></td>
-          </tr>
-          <tr class="has-text-centered">
-            <td style="font-size: 20px;"><i class="fab fa-node"></i> Node.js Version</td>
-            <td style="font-size: 20px;"><%= process.version %></td>
-          </tr>
-          <tr class="has-text-centered">
-            <td style="font-size: 20px;"><i class="fas fa-laptop"></i> Usage</td>
-            <td style="font-size: 20px;">
-                <ul>
-                    <li>Memory: <%= (process.memoryUsage().rss / 1024 / 1024).toFixed(2) %> MB</li>
-                    <li>CPU: <%= (process.cpuUsage().system / 1024 / 1024).toFixed(2) %>%</li>
-                    <li>Node CPU: <%= (process.cpuUsage().user / 1024 / 1024).toFixed(2) %>%</li>
-                </ul>
-            </td>
-          </tr>                                   
+          <td style="font-size: 20px;"><i class="fas fa-users"></i> Users</td>
+          <td style="font-size: 20px;">
+            <%= bot.users.cache.size || 0 %>
+          </td>
+        </tr>
+        <tr class="has-text-centered">
+          <td style="font-size: 20px;"><i class="fas fa-server"></i> Servers</td>
+          <td style="font-size: 20px;">
+            <%= bot.guilds.cache.size || 0 %>
+          </td>
+        </tr>
+        <tr class="has-text-centered">
+          <td style="font-size: 20px;"><i class="fas fa-hashtag"></i> Channels</td>
+          <td style="font-size: 20px;">
+            <%= bot.channels.cache.size || 0 %> (<%= bot.channels.cache.filter(c=> c.type ===
+                channelType.GuildText).size %> Text and <%= bot.channels.cache.filter(c=> c.type ===
+                  channelType.GuildVoice).size %> Voice)
+          </td>
+        </tr>
+        <tr class="has-text-centered">
+          <td style="font-size: 20px;"><i class="fas fa-laugh"></i> Emojis</td>
+          <td style="font-size: 20px;">
+            <%= bot.emojis.cache.size || 0 %> (<%= bot.emojis.cache.filter(e=> e.animated === false).size %> Normal and
+                <%= bot.emojis.cache.filter(e=> e.animated === true).size %> Animated)
+          </td>
+        </tr>
+        <tr class="has-text-centered">
+          <td style="font-size: 20px;"><i class="fa-solid fa-stopwatch"></i> Uptime</td>
+          <td style="font-size: 20px;">
+            <%= uptime %>
+          </td>
+        </tr>
+        <tr class="has-text-centered">
+          <td style="font-size: 20px;"><i class="fas fa-table-tennis"></i> Ping (Latency)</td>
+          <td style="font-size: 20px;">
+            <%= bot.ws.ping || 0 %>ms
+          </td>
+        </tr>
+        <tr class="has-text-centered">
+          <td style="font-size: 20px;"><i class="fab fa-discord"></i> Discord.js Version</td>
+          <td style="font-size: 20px;">v<%= djsVersion %>
+          </td>
+        </tr>
+        <tr class="has-text-centered">
+          <td style="font-size: 20px;"><i class="fa-solid fa-database"></i> Database Version</td>
+          <td style="font-size: 20px;">
+            <%= mongoDBVersion %>
+          </td>
+        </tr>
+        <tr class="has-text-centered">
+          <td style="font-size: 20px;"><i class="fab fa-node"></i> Node.js Version</td>
+          <td style="font-size: 20px;">
+            <%= process.version %>
+          </td>
+        </tr>
+        <tr class="has-text-centered">
+          <td style="font-size: 20px;"><i class="fas fa-laptop"></i> Usage</td>
+          <td style="font-size: 20px;">
+            <ul>
+              <li>Memory: <%= (process.memoryUsage().rss / 1024 / 1024).toFixed(2) %> MB</li>
+              <li>CPU: <%= (process.cpuUsage().system / 1024 / 1024).toFixed(2) %>%</li>
+              <li>Node CPU: <%= (process.cpuUsage().user / 1024 / 1024).toFixed(2) %>%</li>
+            </ul>
+          </td>
+        </tr>
       </tbody>
-  </table>
-</div>
+    </table>
+  </div>
 
-<%- include("partials/footer") %>
+  <%- include("partials/footer") %>

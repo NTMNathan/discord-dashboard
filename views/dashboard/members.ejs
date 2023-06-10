@@ -15,7 +15,7 @@
                 <div class="field is-grouped has-image-centered">
                     <p class="control">
                         <a href="/dashboard/server/<%= guild.id %>" class="button is-sm is-rounded is-white">
-                            <i class="fa-solid fa-angles-left" style="padding-right: 5px;"></i> Go back?
+                            <i class="fa-solid fa-angles-left" style="padding-right: 5px;"></i> Go back
                         </a>
                     </p>
             </div>
@@ -39,7 +39,7 @@
             <thead class="thead has-text-centered">
               <tr>
                 <th style="font-size: 20px;" scope="col">Display Name</th>
-                <th style="font-size: 20px;" scope="col">User Tag</th>
+                <th style="font-size: 20px;" scope="col">Username (or <span title="Legacy Username and Discriminator">Tag</span>)</th>
                 <th style="font-size: 20px;" scope="col">Joined</th>
                 <th style="font-size: 20px;" scope="col">Roles</th>
     
@@ -68,21 +68,23 @@
                           <div class="content">
                             <h6 style="padding-top: 13px;">
                               <strong><%= members[i].displayName %></strong>
-                              <img title="Discord Bot" width="28px" src="https://i.imgur.com/OKVwc6m.png">
+                              <% if (members[i].user.bot) { %>
+                                <img title="Discord Bot" width="28px" src="https://i.imgur.com/OKVwc6m.png">
+                              <% } %>
                             </h6>
                           </div>
                         </div>
                     </article>
                 </td>
-                <td style="font-size: 20px;"><b><%= members[i].user.username %>#<%= members[i].user.discriminator %></b> (<%= members[i].id %>)</td>
-                <td style="font-size: 20px;"><span title="<%= moment(members[i].joinedAt).format("dddd MMMM Do YYYY, h:mm a") %>"><%= moment(members[i].joinedAt).format("l") %></span></td>
+                <td style="font-size: 20px;"><b><%= members[i].user.username %><%= members[i].user.discriminator && members[i].user.discriminator !== '0' ? `#${members[i].user.discriminator}` : '' %></b> (<code><%= members[i].id %></code>)</td>
+                <td style="font-size: 20px;"><span title="<%= dayjs(members[i].joinedAt).format("dddd MMMM Do YYYY, h:mm a") %>"><%= dayjs(members[i].joinedAt).format("DD/MM/YYYY, HH:mm:ss") %></span></td>
                 <td style="font-size: 20px;">
 
                 <% if (roles.length === 0) { %>
-
+                  <p>None</p>
                 <% } else { %>
                     <% for (let j = 0; j < roles.length; j++) { %>
-                        <span class="tag is-dark" style="color: <%= roles[j].hexColor === "#000000" ? "#ffffff" : roles[j].hexColor %>" title="<%= roles[j].id %>"><%= roles[j].name %></span>
+                        <span class="tag is-dark" style="color: <%= roles[j].hexColor === "#000000" ? "#ffffff" : roles[j].hexColor %>" title="<%= roles[j].id %>"><b><%= roles[j].name %></b></span>
                     <% } %>
                 <% } %>
               </tr>                                          

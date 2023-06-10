@@ -15,7 +15,7 @@
                 <div class="field is-grouped has-image-centered">
                     <p class="control">
                         <a href="/dashboard/server/<%= guild.id %>" class="button is-sm is-rounded is-white">
-                            <i class="fa-solid fa-angles-left" style="padding-right: 5px;"></i> Go back?
+                            <i class="fa-solid fa-angles-left" style="padding-right: 5px;"></i> Go back
                         </a>
                     </p>
             </div>
@@ -42,11 +42,11 @@
             </tr>
             <tr class="has-text-centered">
                 <td style="font-size: 20px;"><i class="fas fa-crown"></i> Server Owner</td>
-                <td style="font-size: 20px;"><%= owner.tag %> [<%= guild.ownerId %>]</td>
+                <td style="font-size: 20px;"><%= owner.username %><% owner.discriminator && owner.discriminator !== '0' ? `#${owner.discriminator}` : '' %> (<%= owner.id %>)</td>
             </tr>
             <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fas fa-calendar"></i> Created</td>
-                <td style="font-size: 20px;"><%= moment(guild.createdAt).format("LLLL") %></td>
+                <td style="font-size: 20px;"><i class="fas fa-calendar"></i> Date Created</td>
+                <td style="font-size: 20px;"><%= dayjs(guild.createdAt).format("DD/MM/YYYY, HH:mm:ss") %></td>
             </tr>
             <tr class="has-text-centered">
                 <td style="font-size: 20px;"><i class="fas fa-users"></i> Members</td>
@@ -81,7 +81,7 @@
             </tr>
             <tr class="has-text-centered">
                 <td style="font-size: 20px;"><i class="fas fa-arrow-up"></i> Highest Role</td>
-                <td style="font-size: 20px;"><span style="color: <%= guild.roles.highest.hexColor %>; background-color: #23272A; border-radius: 5px; padding: 2.5px;"><%= guild.roles.highest.name %></span></td>
+                <td style="font-size: 20px;"><span style="color: <%= guild.roles.highest.hexColor %>; background-color: #23272A; border-radius: 5px; padding: 2.5px;"><b><%= guild.roles.highest.name %></b></span></td>
             </tr>
           </tbody>
       </table>

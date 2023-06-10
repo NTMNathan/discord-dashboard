@@ -6,8 +6,8 @@ A simple Discord Bot Dashboard that is coded with Express, MongoDB and Discord.j
 **Screenshots:** [Click Here](https://imgur.com/a/LJTHT3j)
 
 ## Requirements
-- Node.js **v17.9** or later
-- Discord.js **v14.3.0** or later
+- Node.js **v19.5.0** or later
+- Discord.js **v14.11.0** or later
 
 ## Setup 
 1. Create a folder on your computer, then type the following console command to clone this repository.

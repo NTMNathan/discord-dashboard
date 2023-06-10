@@ -1,6 +1,6 @@
 const { PermissionFlagsBits, SlashCommandBuilder, ContextMenuCommandBuilder } = require('discord.js');
 const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/10');
+const { Routes } = require('discord-api-types/v10');
 require('dotenv').config();
 
 const deploy = async () => {
@@ -36,7 +36,7 @@ const deploy = async () => {
 			.setDMPermission(false),
 	].map(cmd => cmd.toJSON());
 
-	const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+	const rest = new REST().setToken(process.env.TOKEN);
 
 	try {
 		const clientId = process.env.CLIENT_ID;

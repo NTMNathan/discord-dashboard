@@ -50,7 +50,7 @@
                             <div class="dropdown is-right is-hoverable">
                                 <div class="dropdown-trigger">
                                   <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
-                                    <span><%= user.username %>#<%= user.discriminator %></span>
+                                    <span><%= user.username %><%= user.discriminator && user.discriminator !== '0' ? `#${user.discriminator}` : '' %></span>
                                     <span class="icon is-small">
                                       <i class="fas fa-angle-down" aria-hidden="true"></i>
                                     </span>

@@ -1,7 +1,7 @@
 const express = require('express');
 const { ChannelType, PermissionsBitField } = require('discord.js');
-const moment = require('moment');
-require('moment-duration-format');
+const dayjs = require('dayjs');
+require('dayjs/plugin/duration');
 
 const router = express.Router();
 
@@ -29,7 +29,7 @@ router.get('/server/:guildID/profile', checkAuth, async (req, res) => {
 		'online': 'Online',
 		'idle': 'Idle',
 		'dnd': 'Do Not Disturb',
-		'offline': 'Offline',
+		'offline': 'Invisible',
 	};
 
 	let statusTypeData;
@@ -37,7 +37,7 @@ router.get('/server/:guildID/profile', checkAuth, async (req, res) => {
 	let statusColorData;
 
 	if (userObj.presence === null) {
-		statusTypeData = 'Offline';
+		statusTypeData = 'Invisible';
 		statusGameData = 'Not Playing/Streaming';
 		statusColorData = '#747f8d';
 	}
@@ -80,7 +80,7 @@ router.get('/server/:guildID/profile', checkAuth, async (req, res) => {
 		status: statusTypeData,
 		statusColor: statusColorData,
 		statusGame: statusGameData,
-		moment: moment,
+		dayjs: dayjs,
 		userSubscription: userSubscription[req.user.premium_type],
 		user: req.user || null,
 	});
@@ -146,7 +146,7 @@ router.get('/server/:guildID/members', checkAuth, async (req, res) => {
 		user: req.user || null,
 		guild: server,
 		members: members,
-		moment: moment,
+		dayjs: dayjs,
 	});
 });
 
@@ -165,7 +165,7 @@ router.get('/server/:guildID/stats', checkAuth, async (req, res) => {
 		user: req.user || null,
 		guild: server,
 		channelType: ChannelType,
-		moment: moment,
+		dayjs: dayjs,
 	});
 });
 

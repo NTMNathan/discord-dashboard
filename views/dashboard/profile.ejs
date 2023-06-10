@@ -1,80 +1,98 @@
 <%- include("../partials/header") %>
 
-<title>Your Profile » <%= bot.user.username %> Dashboard</title>
+    <title>Your Profile » <%= bot.user.username %> Dashboard</title>
 
-<style>
-.statusColor {
-    color: <%= statusColor %>;
-}
-</style>
+    <style>
+        .statusColor {
+            color: <%=statusColor %>;
+        }
+    </style>
 
-<section class="hero is-small has-text-centered is-link">
-    <div class="hero-body" style="padding-top: 50px; padding-bottom: 50px; background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(<%= user.banner ? `https://cdn.discordapp.com/banners/${user.id}/${user.banner}?size=2048` : 'https://i.imgur.com/I06gL1Z.png' %>)">
-        <figure class="image is-128x128 has-image-centered">
-            <img class="is-rounded" style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);" src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>">
-        </figure>
-        <br>
-        <h1 class="is-size-1" style="text-shadow: 0 0 10px #000000;">
-            <%= user.username %>#<%= user.discriminator %>
-        </h1>
+    <section class="hero is-small has-text-centered is-link">
+        <div class="hero-body"
+            style="padding-top: 50px; padding-bottom: 50px; background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(<%= user.banner ? `https://cdn.discordapp.com/banners/${user.id}/${user.banner}?size=2048` : 'https://i.imgur.com/I06gL1Z.png' %>)">
+            <figure class="image is-128x128 has-image-centered">
+                <img class="is-rounded" style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);"
+                    src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>">
+            </figure>
+            <br>
+            <h1 class="is-size-1" style="text-shadow: 0 0 10px #000000;">
+                <%= user.username %><%= user.discriminator && user.discriminator !== '0' ? `#${user.discriminator}` : '' %>
+            </h1>
+        </div>
+    </section>
+
+    <div class="container has-text-centered" style="padding-top: 50px; padding-bottom: 50px;">
+        <table class="table is-fullwidth">
+            <tbody>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fas fa-users"></i> ID</td>
+                    <td style="font-size: 20px;">
+                        <%= user.id %>
+                    </td>
+                </tr>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fas fa-hashtag"></i> Discriminator</td>
+                    <td style="font-size: 20px;">
+                        <%= user.discriminator && user.discriminator !== '0' ? `#${user.discriminator}` : 'Deprecated (Migrated to username)' %>
+                    </td>
+                </tr>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fa-solid fa-tag"></i> Nickname</td>
+                    <td style="font-size: 20px;">
+                        <%= userObj.nickname ? userObj.nickname : 'Not Set' %>
+                    </td>
+                </tr>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fa-solid fa-user-shield"></i> Hoist Role</td>
+                    <td style="font-size: 20px;">
+                        <%= userObj.roles.hoist ? userObj.roles.hoist.name : 'Not set.' %>
+                    </td>
+                </tr>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fas fa-flag"></i> Flags</td>
+                    <td style="font-size: 20px;">
+                        <%= userFlags %>
+                    </td>
+                </tr>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fas fa-calendar"></i> Created</td>
+                    <td style="font-size: 20px;">
+                        <%= dayjs(userObj.user.createdAt).format("DD/MM/YYYY, HH:mm:ss") %>
+                    </td>
+                </tr>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fas fa-calendar"></i> Joined Server</td>
+                    <td style="font-size: 20px;">
+                        <%= dayjs(userObj.joinedAt).format("DD/MM/YYYY, HH:mm:ss") %>
+                    </td>
+                </tr>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fab fa-discord"></i> Status</td>
+                    <td style="font-size: 20px;"><i class="fas fa-circle statusColor fa-xs"></i>
+                        <%= status %>
+                    </td>
+                </tr>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fas fa-gamepad"></i> Game</td>
+                    <td style="font-size: 20px;">
+                        <%= statusGame %>
+                    </td>
+                </tr>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fab fa-discord"></i> Subscription</td>
+                    <td style="font-size: 20px;">
+                        <%= userSubscription %>
+                    </td>
+                </tr>
+                <tr class="has-text-centered">
+                    <td style="font-size: 20px;"><i class="fas fa-shield-alt"></i> MFA</td>
+                    <td style="font-size: 20px;">
+                        <%= user.mfa_enabled ? "Yes" : "No" %>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</section>
 
-<div class="container has-text-centered" style="padding-top: 50px; padding-bottom: 50px;">
-    <table class="table is-fullwidth">
-        <thead class="thead">
-            <tr>
-            <th style="font-size: 20px;" scope="col">Type</th>
-            <th style="font-size: 20px;" scope="col">Data</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fas fa-users"></i> ID</td>
-                <td style="font-size: 20px;"><%= user.id %></td>
-            </tr>
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fas fa-hashtag"></i> Discriminator</td>
-                <td style="font-size: 20px;">#<%= user.discriminator %></td>
-            </tr>
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fa-solid fa-tag"></i> Nickname</td>
-                <td style="font-size: 20px;"><%= userObj.nickname ? userObj.nickname : 'Not Set' %></td>
-            </tr>
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fa-solid fa-user-shield"></i> Hoist Role</td>
-                <td style="font-size: 20px;"><%= userObj.roles.hoist ? userObj.roles.hoist.name : 'Not set.' %></td>
-            </tr>
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fas fa-flag"></i> Flags</td>
-                <td style="font-size: 20px;"><%= userFlags %></td>
-            </tr>
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fas fa-calendar"></i> Created</td>
-                <td style="font-size: 20px;"><%= moment(userObj.user.createdAt).format("LLLL") %></td>
-            </tr>
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fas fa-calendar"></i> Joined Server</td>
-                <td style="font-size: 20px;"><%= moment(userObj.joinedAt).format("LLLL") %></td>
-            </tr>
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fab fa-discord"></i> Status</td>
-                <td style="font-size: 20px;"><i class="fas fa-circle statusColor fa-xs"></i> <%= status %></td>
-            </tr>
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fas fa-gamepad"></i> Game</td>
-                <td style="font-size: 20px;"><%= statusGame %></td>
-            </tr>
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fab fa-discord"></i> Subscription</td>
-                <td style="font-size: 20px;"><%= userSubscription %></td>
-            </tr>    
-            <tr class="has-text-centered">
-                <td style="font-size: 20px;"><i class="fas fa-shield-alt"></i> MFA</td>
-                <td style="font-size: 20px;"><%= user.mfa_enabled ? "Yes" : "No" %></td>
-            </tr>                                 
-        </tbody>
-    </table>
-</div>
-
-<%- include("../partials/footer") %>
+    <%- include("../partials/footer") %>
