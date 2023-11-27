@@ -6,7 +6,7 @@ require('dayjs/plugin/duration');
 const router = express.Router();
 
 const db = require('../db/manager');
-const checkAuth = require('../backend/CheckAuth');
+const checkAuth = require('../backend/checkAuth');
 
 router.get('/server/:guildID/profile', checkAuth, async (req, res) => {
 	const userObj = req.client.guilds.cache.get(req.params.guildID).members.cache.get(req.user.id);
