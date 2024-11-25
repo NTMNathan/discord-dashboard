@@ -1,3 +1,9 @@
+# ⚠️⚠️ NO LONGER MAINTAINED ⚠️⚠️
+I no longer have the time to maintain this repository. Therefore, I will not be providing any further fixes or support for the repo, including through my Discord server.
+
+<br>
+<br>
+
 <img src="https://i.imgur.com/1JEnQ5p.png" width="650" height="auto">
 
 # Discord Dashboard Example
